@@ -11,7 +11,9 @@ const VARIANTS: Record<BoardObject['type'], Component> = {
 }
 
 const { objects, load, addObject, resizeObject, updateText, updateStyle } = useBoard()
-await callOnce(load)
+const boardId = useRoute().params.id as string
+// A link to a board that no longer exists leads back to the start page.
+await load(boardId).catch(() => navigateTo('/', { replace: true }))
 
 // Local UI state of this user; it is not part of the shared board state.
 const scale = ref(1)
@@ -75,4 +77,5 @@ function onEdit(object: BoardObject) {
     @change="changes => updateStyle(selectedObject!.id, changes)"
   />
   <ObjectToolbar @add="onAdd" />
+  <BoardMenu :board-id="boardId" />
 </template>

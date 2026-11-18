@@ -6,11 +6,13 @@ interface Shortcut {
   run: (selected?: BoardObject) => void
 }
 
+// Lives outside the function, so a copied object can be pasted on another board.
+let clipboard: BoardObject | null = null
+
 // Keyboard shortcuts for canvas objects. They only use the base attributes,
 // so they work for every variant.
 export function useShortcuts(selectedId: Ref<string | null>, editingId: Ref<string | null>) {
   const { objects, addCopy, removeObject, moveObject } = useBoard()
-  let clipboard: BoardObject | null = null
 
   const shortcuts: Shortcut[] = [
     { keys: ['mod+c'], run: copy },

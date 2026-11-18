@@ -5,7 +5,11 @@ info:
 
 http:
   method: POST
-  url: http://localhost:3001/objects
+  url: http://localhost:3001/boards/:boardId/objects
+  params:
+    - name: boardId
+      value: mein-erstes-board
+      type: path
   headers:
     - name: Content-Type
       value: application/json
